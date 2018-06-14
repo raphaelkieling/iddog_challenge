@@ -1,7 +1,7 @@
 import { domainName } from './config';
 import { Token } from '../domain/token';
 
-export function Signup(email) {
+export function signup(email) {
     let method = 'POST'
     let body = {
         email

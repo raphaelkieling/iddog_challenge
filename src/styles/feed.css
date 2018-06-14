@@ -1,0 +1,26 @@
+.feed__photos-container{
+    
+}
+
+.feed__navbar{
+    display: block;
+    display: flex;
+    justify-content: center;
+    box-shadow: 0 0 black;
+    width: 100%;
+    margin: 20px;
+}
+
+.feed__navbar .feed__navbar__navbar-item{
+    font-size: 18px;
+    padding: 0 20px;
+    cursor:pointer;
+}
+
+
+
+.feed__navbar .feed__navbar__navbar-item.selected{
+    color: var(--primary-color);
+    font-weight: bold;
+    transition: all 0.1s linear;
+}

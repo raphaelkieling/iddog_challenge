@@ -1,59 +1,65 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
-import { Signup as signupRequisition } from '../api/signup';
+import { signup as signupRequisition } from '../api/signup';
+import { ToastContainer, toast } from 'react-toastify';
+import { Container, Panel, Input, Col } from 'muicss/react';
+import Loader from '../components/Loader'
 
 export default class Signup extends Component {
     constructor() {
         super()
 
         this.state = {
+            email:"",
             logged: false,
-            msg: null
+            loading: false
         }
 
-        this.submit = this.submit.bind(this)
         this.handleEnter = this.handleEnter.bind(this)
+        this.setLoaderState = this.setLoaderState.bind(this)
+        this.handleForm = this.handleForm.bind(this)
+    }
+
+    setLoaderState(state) {
+        this.setState({ loading: state })
     }
 
     login(form) {
-        //Email utilizado => your@email.com
-        signupRequisition(form.email)
-            .then(logged => this.setState({ logged }))
+        //E-mail fixed in api "your@email.com"
+
+        this.setLoaderState(true)
+        signupRequisition(this.state.email)
+            .then(logged => {
+                this.setLoaderState(false)
+                this.setState({ logged })
+            })
             .catch(err => {
-                this.setState({
-                    msg: {
-                        message: err.message,
-                        type: 'error'
-                    }
-                })
+                this.setLoaderState(false)
+                toast.error(err.message)
             })
     }
 
-    submit() {
-        const form = {
-            email: this.email.value
-        }
-
-        this.login(form)
-    }
 
     handleEnter(event) {
-        if (event.key === 'Enter') this.submit()
+        if (event.key === 'Enter') this.login()
+    }
+
+    handleForm(ev){
+        this.setState({[ev.target.name]: ev.target.value});
     }
 
     loginPage() {
         return (
-            <div className="mui-row">
-                <div className="mui-col-md-4 mui-col-md-offset-4">
-                    <div className="mui-panel">
-                        <div className="mui-textfield">
-                            <input type="text" ref={(input) => this.email = input} onKeyPress={this.handleEnter} />
-                            <label>Email</label>
-                        </div>
-                        {this.state.msg ? <p>{this.state.msg.message}</p> : null}
-                    </div>
-                </div>
-            </div>
+            <Container className="signup__container animated fadeInUp">
+                <Col md="4" md-offset="4">
+                    <Panel>
+                        {this.state.loading
+                            ? <Loader />
+                            : <Input label="E-mail Address" type="email" placeholder="Enter with your e-mail" name="email" onChange={this.handleForm} onKeyPress={this.handleEnter} />}
+                        <ToastContainer />
+                    </Panel>
+                </Col>
+            </Container>
         )
     }
 
