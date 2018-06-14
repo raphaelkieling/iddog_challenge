@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import Header from '../components/Header';
-import { BrowserRouter, Route, Switch, Link } from 'react-router-dom';
-import Login from './Login';
-import Galery from './Galery';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import Signup from './Signup';
+import Feed from './Feed';
+import { RoutePrivate } from '../components/RoutePrivate';
 
 class App extends Component {
   render() {
@@ -10,10 +11,10 @@ class App extends Component {
       <div>
         <BrowserRouter>
           <div>
-            <Header />
+            <Header/>
             <Switch>
-              <Route path="/login" component={Login} />
-              <Route path="/galery" component={Galery} />
+              <Route path="/signup" component={Signup}/>
+              <RoutePrivate path="/feed" component={Feed} />
             </Switch>
           </div>
         </BrowserRouter>

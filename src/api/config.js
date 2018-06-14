@@ -1,1 +1,1 @@
-export const domainName = 'https://iddog-api.now.sh/';
+export const domainName = 'https://iddog-api.now.sh';
