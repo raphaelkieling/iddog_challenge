@@ -1,9 +1,13 @@
 import React from 'react';
 
-const FeedNavbar = ({categories}) => (
+const FeedNavbar = ({ categories, getCategory }) => (
     <div>
-        Navbaaar
+        {categories.map((category, i) =>
+            <div key={i} onClick={() => getCategory(category)}>
+                {category}
+            </div>
+        )}
     </div>
-);
+)
 
 export default FeedNavbar;

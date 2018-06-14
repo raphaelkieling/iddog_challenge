@@ -43,9 +43,16 @@ export default class Signup extends Component {
 
     loginPage() {
         return (
-            <div>
-                <input type="text" ref={(input) => this.email = input} onKeyPress={this.handleEnter} />
-                {this.state.msg ? <p>{this.state.msg.message}</p> : null}
+            <div className="mui-row">
+                <div className="mui-col-md-4 mui-col-md-offset-4">
+                    <div className="mui-panel">
+                        <div className="mui-textfield">
+                            <input type="text" ref={(input) => this.email = input} onKeyPress={this.handleEnter} />
+                            <label>Email</label>
+                        </div>
+                        {this.state.msg ? <p>{this.state.msg.message}</p> : null}
+                    </div>
+                </div>
             </div>
         )
     }

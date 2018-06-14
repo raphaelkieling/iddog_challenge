@@ -1,11 +1,9 @@
-import React, { Component } from 'react'
+import React from 'react';
 
-export default class FeedPhotos extends Component {
-  render() {
-    return (
-      <div>
-        lorem dsasda
-      </div>
-    )
-  }
-}
+const FeedPhotos = ({ photos }) => (
+  photos.map((photo, i) =>
+    <img key={i} src={photo} alt="Image from feed"/>
+  )
+);
+
+export default FeedPhotos;
