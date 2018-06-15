@@ -100,7 +100,7 @@ export default class Feed extends Component {
         <Panel className="photo__container-panel animated fadeInRight">
           {this.state.loading
             ? <Loader />
-            : <img src={this.state.image.href} />}
+            : <img src={this.state.image.href} alt="Cachorro"/>}
 
           <br />
 
