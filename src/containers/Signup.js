@@ -3,45 +3,45 @@ import { Redirect } from 'react-router-dom';
 import { signup as signupRequisition } from '../api/signup';
 import { ToastContainer, toast } from 'react-toastify';
 import { Container, Panel, Input, Col } from 'muicss/react';
-import Loader from '../components/Loader'
+import Loader from '../components/Loader';
 
 export default class Signup extends Component {
     constructor() {
-        super()
+        super();
 
         this.state = {
             email:"",
             logged: false,
             loading: false
-        }
+        };
 
-        this.handleEnter = this.handleEnter.bind(this)
-        this.setLoaderState = this.setLoaderState.bind(this)
-        this.handleForm = this.handleForm.bind(this)
+        this.handleEnter = this.handleEnter.bind(this);
+        this.setLoaderState = this.setLoaderState.bind(this);
+        this.handleForm = this.handleForm.bind(this);
     }
 
     setLoaderState(state) {
-        this.setState({ loading: state })
+        this.setState({ loading: state });
     }
 
     login(form) {
         //E-mail fixed in api "your@email.com"
 
-        this.setLoaderState(true)
+        this.setLoaderState(true);
         signupRequisition(this.state.email)
             .then(logged => {
-                this.setLoaderState(false)
-                this.setState({ logged })
+                this.setLoaderState(false);
+                this.setState({ logged });
             })
             .catch(err => {
-                this.setLoaderState(false)
-                toast.error(err.message)
-            })
+                this.setLoaderState(false);
+                toast.error(err.message);
+            });
     }
 
 
     handleEnter(event) {
-        if (event.key === 'Enter') this.login()
+        if (event.key === 'Enter') this.login();
     }
 
     handleForm(ev){
@@ -60,11 +60,11 @@ export default class Signup extends Component {
                     </Panel>
                 </Col>
             </Container>
-        )
+        );
     }
 
     redirectToSignup() {
-        return (<Redirect to="/feed" />)
+        return (<Redirect to="/feed" />);
     }
 
     render() {

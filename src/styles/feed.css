@@ -1,6 +1,28 @@
 .feed__photos-container{
-    
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
 }
+
+.feed__photos-photo{
+    width: 300px;
+    height: 300px;
+    overflow: hidden;
+    margin: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.feed__photos-photo img:hover {
+    transform: scale(1.2);
+    transition: transform 0.75s cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+.feed__photos-photo img {
+    transition: transform 0.75s cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
 
 .feed__navbar{
     display: block;
@@ -24,3 +46,4 @@
     font-weight: bold;
     transition: all 0.1s linear;
 }
+

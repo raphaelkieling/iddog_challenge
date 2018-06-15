@@ -4,6 +4,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Signup from './Signup';
 import Feed from './Feed';
 import { RoutePrivate } from '../components/RoutePrivate';
+import NotFound from './NotFound';
 
 class App extends Component {
   render() {
@@ -13,8 +14,9 @@ class App extends Component {
           <div>
             <Header/>
             <Switch>
-              <Route path="/signup" component={Signup}/>
+              <Route path="/signup" component={Signup} />
               <RoutePrivate path="/feed" component={Feed} />
+              <Route component={NotFound} />
             </Switch>
           </div>
         </BrowserRouter>

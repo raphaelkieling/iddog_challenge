@@ -1,0 +1,14 @@
+.photo__container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 60px;
+}
+
+.photo__container-panel{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}

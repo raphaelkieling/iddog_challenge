@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 
 export default class Header extends Component {
   render() {
@@ -6,6 +6,6 @@ export default class Header extends Component {
       <div className="header animated fadeInDown">
         <span>THE <b>IDDOG CHALLENGE</b></span>
       </div>
-    )
+    );
   }
 }

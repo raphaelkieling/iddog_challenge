@@ -1,6 +1,8 @@
 @import url('./variables.css');
 @import url('./header.css');
+@import url('./modal.css');
 @import url('./signup.css');
 @import url('./feed.css');
+@import url('./photo.css');
 @import url('./loader.css');
 @import url('../../node_modules/react-toastify/dist/ReactToastify.css');
