@@ -1,4 +1,6 @@
-# IDWALL CHALLENGE
+# IDWALL CHALLENGE :collision:
+
+Link para a demonstração: [Link do site](https://idwall-challenge.herokuapp.com "IDWALL") :deciduous_tree:
 
 ## Sobre
 A aplicação foi feita utilizando:
@@ -15,7 +17,7 @@ A base do feed de fotos foi feita com flexbox. O "lightbox" foi criado com o rea
 
 O código final também foi adaptado um memoize baseado em promises que criei. Não fui atrás de libs ou código pronto, pois é algo simples e uma técnica utilizada de forma parecida em patterns pub,sub de forma pura. Um Map pra guardar os valores. 
 
-> Lembrando que estou ciente que os dados podem ser modificados com o tempo e normalmente utiliza-se um _age_ pra determinar quanto tempo vai durar o armazenamento, mas como eu estava tendo problemas com a API caindo em alguns momentos e não são adicionadas imagens frequentementes, já está ótimo deste jeito.
+> Lembrando que estou ciente que os dados podem ser modificados com o tempo e normalmente utiliza-se um _age_ pra determinar quanto tempo vai durar o armazenamento, mas não julquei necessário neste cenário.
 
 ```js
 // Guarda as respostas referentes aos atributos
@@ -38,7 +40,7 @@ export const memoize_promise = (fn) => {
 ```
 
 
-## Quer dar uma olhada no cógido?
+## Quer dar uma olhada no códido? :cop:
 
 ```sh
 #Clonar o repositório
