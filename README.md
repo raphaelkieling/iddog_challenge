@@ -39,7 +39,6 @@ export const memoize_promise = (fn) => {
 };
 ```
 
-
 ## Quer dar uma olhada no códido? :cop:
 
 ```sh
@@ -52,3 +51,22 @@ npm install
 #Iniciar
 npm start
 ```
+
+## Outro projeto em andamento
+### Findme
+
+A ideia do projeto é juntar prestadores de serviço e clientes. Aberto para todos sem qualquer custo inicialmente.
+Utilizo muito mais em meu dia a dia o Angular 2 >, fiz também a parte do backend com graphql e socket para mensagens com deploy no heroku.
+
+![FindME](https://image.ibb.co/gFGQFJ/Captura_de_tela_de_2018_06_16_11_00_44.png)
+
+[Link para o projeto do frontend no github](https://github.com/raphaelkieling/Findme-Client)
+
+[Link para o app que está em estágio inicial de desenvolvimento](https://findme-client.herokuapp.com/entrar)
+
+Caso queiram dar uma olhada por dentro.
+```txt
+Usuário: pro1
+Senha: pro1
+```
+
