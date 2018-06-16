@@ -14,6 +14,7 @@ class App extends Component {
           <div>
             <Header/>
             <Switch>
+              <Route exact path="/" component={Signup} />
               <Route path="/signup" component={Signup} />
               <RoutePrivate path="/feed" component={Feed} />
               <Route component={NotFound} />
