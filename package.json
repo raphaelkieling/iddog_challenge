@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "lru-memoize": "^1.0.2",
     "muicss": "^0.9.39",
     "query-string": "^6.1.0",
     "react": "^16.4.1",

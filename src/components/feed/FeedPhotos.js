@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import LazyLoad from 'react-lazyload';
 import Modal from 'react-modal';
-
+import { toParameterUrl } from '../../utils/parameter';
 
 Modal.setAppElement('body');
 
@@ -47,7 +47,7 @@ class FeedPhotos extends Component {
         {this.modalContainer()}
         {this.props.photos.map((photo, i) =>
           <div key={i} className="feed__photos-photo" onClick={() => this.openModal(photo)}>
-            <Link to={`/feed?category=${this.props.category}&id=${i}`} >
+            <Link to={`/feed?` + toParameterUrl({ category: this.props.category, id: i })} >
               <LazyLoad throttle={200} height={300}>
                 <img key={i} src={photo} alt="Cachorro" className="animated fadeIn" />
               </LazyLoad>

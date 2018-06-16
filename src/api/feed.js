@@ -1,38 +1,50 @@
 import { domainName } from './config';
 import { Token } from '../domain/token';
 import { toParameterUrl } from '../utils/parameter';
+import { memoize_promise } from '../utils/memoize-promise';
 
 export function feed() {
-    let method = 'GET'
+    const feedRequisition = _ => {
+        let method = 'GET';
 
-    return fetch(`${domainName}/feed`, {
-        method,
-        headers: builHeaders()
-    })
-        .then(res => res.json())
-        .then(res => {
-            if (!res) throw new Error(res.error.message)
-            return res;
+        return fetch(`${domainName}/feed`, {
+            method,
+            headers: builHeaders()
         })
+            .then(res => res.json())
+            .then(res => {
+                if (!res) throw new Error(res.error.message);
+                return res;
+            });
+    };
+
+    return memoize_promise(feedRequisition)();
 }
 
 export function feedPerCategory(category) {
-    let method = 'GET'
+    const feedPerCategoryRequisition = (category) => {
+        let method = 'GET';
 
-    return fetch(`${domainName}/feed?${toParameterUrl({ category })}`, {
-        method,
-        headers: builHeaders()
-    })
-        .then(res => res.json())
-        .then(res => {
-            if (!res) throw new Error(res.error.message)
-            return res;
+        return fetch(`${domainName}/feed?${toParameterUrl({ category })}`, {
+            method,
+            headers: builHeaders()
         })
+            .then(res => res.json())
+            .then(res => {
+                console.log('Entrei aqui');
+
+                if (!res) throw new Error(res.error.message);
+                return res;
+            });
+    };
+
+    return memoize_promise(feedPerCategoryRequisition)(category);
+
 }
 
 function builHeaders() {
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    headers.append('Authorization', `${Token.value}`)
+    headers.append('Authorization', `${Token.value}`);
     return headers;
 }
