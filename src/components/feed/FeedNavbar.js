@@ -8,6 +8,6 @@ const FeedNavbar = ({ categories, getCategory, selected }) => (
             </div>
         )}
     </div>
-)
+);
 
 export default FeedNavbar;

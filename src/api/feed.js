@@ -1,7 +1,7 @@
 import { domainName } from './config';
 import { Token } from '../domain/token';
-import { toParameterUrl } from '../utils/parameter';
 import { memoize_promise } from '../utils/memoize-promise';
+import query from 'querystringify';
 
 export function feed() {
     const feedRequisition = _ => {
@@ -25,7 +25,7 @@ export function feedPerCategory(category) {
     const feedPerCategoryRequisition = (category) => {
         let method = 'GET';
 
-        return fetch(`${domainName}/feed?${toParameterUrl({ category })}`, {
+        return fetch(`${domainName}/feed?${query.stringify({ category })}`, {
             method,
             headers: builHeaders()
         })

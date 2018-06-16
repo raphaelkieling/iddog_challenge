@@ -68,6 +68,6 @@ export default class Signup extends Component {
     }
 
     render() {
-        return !this.state.logged ? this.loginPage() : this.redirectToSignup()
+        return !this.state.logged ? this.loginPage() : this.redirectToSignup();
     }
 }

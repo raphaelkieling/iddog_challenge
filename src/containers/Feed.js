@@ -4,7 +4,7 @@ import FeedNavbar from '../components/feed/FeedNavbar';
 import { feed as feedRequisition, feedPerCategory as feedPerCategoryRequisition } from '../api/feed';
 import Loader from '../components/Loader';
 import { ToastContainer, toast } from 'react-toastify';
-import queryString from 'query-string';
+import query from 'querystringify';
 import { isEmpty } from '../utils/object';
 import Panel from 'muicss/lib/react/panel';
 import { Link } from 'react-router-dom';
@@ -33,7 +33,7 @@ export default class Feed extends Component {
 
   setPhotoContainerParameters() {
     //use to get parameters in url
-    const image = queryString.parse(this.props.location.search);
+    const image = query.parse(this.props.location.search);
     
     if (!isEmpty(image))
       this.feedPerCategory(image.category)
