@@ -1,8 +1,15 @@
 
 .header{
     text-align: center;
-    margin-top: 100px;
+    margin: 100px 0 20px 0;
     font-size: 30px;
+}
+
+.header span{
+    background:  var(--primary-color);
+    padding:  10px;
+    box-sizing:  border-box;
+    color:  white;
 }
 
 .header__title-custom{

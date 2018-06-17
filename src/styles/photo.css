@@ -12,3 +12,9 @@
     align-items: center;
     justify-content: center;
 }
+
+@media screen and (max-width: 600px) {
+    .photo__container-panel img{
+        width:100%;
+    }
+}

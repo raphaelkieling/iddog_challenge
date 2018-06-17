@@ -30,7 +30,7 @@
     justify-content: center;
     box-shadow: 0 0 black;
     width: 100%;
-    margin: 20px;
+    margin: 20px 0;
 }
 
 .feed__navbar .feed__navbar__navbar-item{
@@ -46,4 +46,21 @@
     font-weight: bold;
     transition: all 0.1s linear;
 }
+
+@media screen and (max-width: 600px) {
+    .feed__photos-photo {
+        width: 100%;
+    }
+    
+    .feed__navbar .feed__navbar__navbar-item{
+        font-size: 23px;
+    }
+    
+    .feed__navbar{
+        align-items: center;
+        flex-direction: column;
+    }
+
+}
+
 
