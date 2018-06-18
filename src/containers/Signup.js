@@ -4,38 +4,42 @@ import { signup as signupRequisition } from '../api/signup';
 import { ToastContainer, toast } from 'react-toastify';
 import { Container, Panel, Input, Col } from 'muicss/react';
 import Loader from '../components/Loader';
+import { connect } from 'react-redux';
+import { setLogged } from '../actions/signup';
+import PropTypes from 'prop-types';
 
-export default class Signup extends Component {
+class Signup extends Component {
     constructor() {
         super();
 
         this.state = {
-            email:"",
-            logged: false,
-            loading: false
+            loading: false,
+            email: ''
         };
 
         this.handleEnter = this.handleEnter.bind(this);
         this.setLoaderState = this.setLoaderState.bind(this);
         this.handleForm = this.handleForm.bind(this);
+        this.login = this.login.bind(this);
     }
 
     setLoaderState(state) {
         this.setState({ loading: state });
     }
 
-    login(form) {
+    login() {
         //E-mail fixed in api "your@email.com"
-
         this.setLoaderState(true);
-        signupRequisition(this.state.email)
-            .then(logged => {
+
+        return this.props.login(this.state.email)
+            .then(res => {
                 this.setLoaderState(false);
-                this.setState({ logged });
+                return res;
             })
             .catch(err => {
                 this.setLoaderState(false);
                 toast.error(err.message);
+                return err;
             });
     }
 
@@ -44,16 +48,17 @@ export default class Signup extends Component {
         if (event.key === 'Enter') this.login();
     }
 
-    handleForm(ev){
-        this.setState({[ev.target.name]: ev.target.value});
+    handleForm(ev) {
+        this.setState({ [ev.target.name]: ev.target.value });
     }
 
     loginPage() {
+        let { loading } = this.state;
         return (
             <Container className="signup__container animated fadeInUp">
                 <Col md="4" md-offset="4">
                     <Panel>
-                        {this.state.loading
+                        {loading
                             ? <Loader />
                             : <Input label="E-mail Address" type="email" placeholder="Enter with your e-mail" name="email" onChange={this.handleForm} onKeyPress={this.handleEnter} />}
                         <ToastContainer />
@@ -68,6 +73,25 @@ export default class Signup extends Component {
     }
 
     render() {
-        return !this.state.logged ? this.loginPage() : this.redirectToSignup();
+        let { logged } = this.props;
+        return !logged ? this.loginPage() : this.redirectToSignup();
     }
 }
+
+Signup.contextTypes = { store: PropTypes.object };
+
+const mapStateToProps = state => {
+    return ({
+        logged: state.signup.logged
+    });
+};
+
+const mapDispatchToProps = dispatch => {
+    return ({
+        login: (email) => dispatch(signupRequisition(email))
+    });
+};
+
+const SignupContainer = connect(mapStateToProps, mapDispatchToProps)(Signup);
+
+export default SignupContainer;

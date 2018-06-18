@@ -4,27 +4,23 @@ import FeedNavbar from '../components/feed/FeedNavbar';
 import { feed as feedRequisition, feedPerCategory as feedPerCategoryRequisition } from '../api/feed';
 import Loader from '../components/Loader';
 import { ToastContainer, toast } from 'react-toastify';
+import { Panel } from 'muicss/react';
+import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import query from 'querystringify';
 import { isEmpty } from '../utils/object';
-import Panel from 'muicss/lib/react/panel';
-import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import * as feedAction from '../actions/feed';
 
-export default class Feed extends Component {
+class Feed extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      categories: ['husky', 'labrador', 'hound', 'pug'],
-      categorySelected: '',
-      listPhotos: [],
-      loading: false,
-      image: undefined
+      loading: false
     };
 
-    this.feedPerCategory = this.feedPerCategory.bind(this);
-    this.setStateForFeed = this.setStateForFeed.bind(this);
     this.feedPerCategoryLoading = this.feedPerCategoryLoading.bind(this);
-    this.feed = this.feed.bind(this);
   }
 
   componentWillMount() {
@@ -32,79 +28,58 @@ export default class Feed extends Component {
   }
 
   setPhotoContainerParameters() {
-    //use to get parameters in url
     const image = query.parse(this.props.location.search);
-    
     if (!isEmpty(image))
-      this.feedPerCategory(image.category)
+      this.props.feedPerCategory(image.category)
         .then(() => {
-          image['href'] = this.state.listPhotos[image.id];
-
-          this.setState({
-            image
-          });
-        });
+          this.props.getImageId(image);
+        })
+        .catch(err => toast.error(err.message));
   }
 
   componentDidMount() {
     this.setLoaderState(true);
-    this.feed().then(() => this.setLoaderState(false));
-  }
-
-
-  setStateForFeed(response) {
-    this.setState({
-      categorySelected: response.category,
-      listPhotos: [...response.list]
-    });
+    this.props.feed()
+      .then(() => this.setLoaderState(false))
+      .catch(err => toast.error(err.message));
   }
 
   setLoaderState(state) {
     this.setState({ loading: state });
   }
 
-  feed() {
-    return feedRequisition()
-      .then(this.setStateForFeed)
-      .catch(err => {
-        toast('Ops... erro ao carregar o feed. Tento novamente mais tarde :)');
-      });
-  }
-
-  feedPerCategory(category) {
-    return feedPerCategoryRequisition(category)
-      .then(this.setStateForFeed)
-      .catch(err => {
-        toast('Ops... erro ao carregar o feed. Tento novamente mais tarde :)');
-      });
-  }
-
   feedPerCategoryLoading(category) {
     this.setLoaderState(true);
-    this.feedPerCategory(category)
-      .then(() => this.setLoaderState(false));
+
+    this.props.feedPerCategory(category)
+      .then(() => this.setLoaderState(false))
+      .catch(err => toast.error(err.message));
   }
 
   feedContainer() {
+    let { categories, listPhotos, categorySelected } = this.props;
+
     return (
       <div>
-        <FeedNavbar categories={this.state.categories} selected={this.state.categorySelected} getCategory={this.feedPerCategoryLoading} />
-        <FeedPhotos photos={this.state.listPhotos} category={this.state.categorySelected} />}
+        <FeedNavbar categories={categories} selected={categorySelected} getCategory={this.feedPerCategoryLoading} />
+        <FeedPhotos photos={listPhotos} category={categorySelected} />
       </div>
     );
   }
 
   photoContainer() {
+    let { clearImage, image } = this.props;
+
     return (
       <div className="photo__container">
         <Panel className="photo__container-panel animated fadeInRight">
           {this.state.loading
             ? <Loader />
-            : <img src={this.state.image.href} alt="Cachorro"/>}
+            : <img src={image.href} alt="Cachorro" />}
 
           <br />
 
-          <Link to="/feed" onClick={() => this.setState({ image: undefined })}>
+          <Link to="/feed" onClick={() => clearImage()}>
             Back to feed
           </Link>
         </Panel>
@@ -113,16 +88,40 @@ export default class Feed extends Component {
   }
 
   render() {
+    let { image } = this.props;
     return (
-      <div className="mui-container-fluid">
+      <div>
         <ToastContainer />
         {this.state.loading
           ? <Loader />
-          : (!this.state.image ? this.feedContainer() : this.photoContainer())
+          : (!image ? this.feedContainer() : this.photoContainer())
         }
       </div>
     );
   }
 }
 
+Feed.contextTypes = { store: PropTypes.object };
+
+const mapStateToProps = state => {
+  return {
+    listPhotos: state.feed.listPhotos,
+    categories: state.feed.categories,
+    categorySelected: state.feed.categorySelected,
+    image: state.feed.image
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    feed: () => dispatch(feedRequisition),
+    clearImage: () => dispatch(feedAction.clearImage({})),
+    feedPerCategory: (category) => dispatch(feedPerCategoryRequisition(category)),
+    getImageId: (image) => dispatch(feedAction.getImageId(image))
+  };
+};
+
+const FeedContainer = connect(mapStateToProps, mapDispatchToProps)(Feed);
+
+export default FeedContainer;
 

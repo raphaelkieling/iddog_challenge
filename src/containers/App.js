@@ -1,18 +1,18 @@
 import React, { Component } from 'react';
 import Header from '../components/Header';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Signup from './Signup';
 import Feed from './Feed';
-import { RoutePrivate } from '../components/RoutePrivate';
 import NotFound from './NotFound';
+
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { RoutePrivate } from '../components/RoutePrivate';
 
 class App extends Component {
   render() {
     return (
-      <div>
         <BrowserRouter>
           <div>
-            <Header/>
+            <Header />
             <Switch>
               <Route exact path="/" component={Signup} />
               <Route path="/signup" component={Signup} />
@@ -21,7 +21,6 @@ class App extends Component {
             </Switch>
           </div>
         </BrowserRouter>
-      </div>
     );
   }
 }

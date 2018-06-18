@@ -1,9 +1,10 @@
 import { domainName } from './config';
-import { Token } from '../domain/token';
+import { Token } from '../utils/token';
 import { memoize_promise } from '../utils/memoize-promise';
 import query from 'querystringify';
+import * as feedAction from '../actions/feed';
 
-export function feed() {
+export function feed(dispatch) {
     const feedRequisition = _ => {
         let method = 'GET';
 
@@ -14,6 +15,8 @@ export function feed() {
             .then(res => res.json())
             .then(res => {
                 if (!res) throw new Error(res.error.message);
+
+                dispatch(feedAction.all(res));
                 return res;
             });
     };
@@ -31,15 +34,19 @@ export function feedPerCategory(category) {
         })
             .then(res => res.json())
             .then(res => {
-                console.log('Entrei aqui');
-
                 if (!res) throw new Error(res.error.message);
                 return res;
             });
     };
+    return (dispatch) => {
+        const memoized = memoize_promise(feedPerCategoryRequisition)(category);
 
-    return memoize_promise(feedPerCategoryRequisition)(category);
+        memoized.then((payload) => {
+            dispatch(feedAction.perCategory(payload));
+        });
 
+        return memoized;
+    };
 }
 
 function builHeaders() {

@@ -1,24 +1,24 @@
 import { domainName } from './config';
-import { Token } from '../domain/token';
-
+import * as actionSignup from '../actions/signup';
 export function signup(email) {
-    let method = 'POST';
-    let body = {
-        email
+    return dispatch => {
+        let method = 'POST';
+        let body = {
+            email
+        };
+
+        return fetch(`${domainName}/signup`, {
+            method,
+            body: JSON.stringify(body),
+            headers: builHeaders()
+        })
+            .then(res => res.json())
+            .then(res => {
+                if (!res.user) throw new Error(res.error.message);
+                dispatch(actionSignup.setLogged(res.user.token));
+                return res.user.token;
+            });
     };
-
-    return fetch(`${domainName}/signup`, {
-        method,
-        body: JSON.stringify(body),
-        headers: builHeaders()
-    })
-        .then(res => res.json())
-        .then(res => {
-            if(!res.user) throw new Error(res.error.message);
-
-            Token.value = res.user.token;
-            return true;
-        });
 }
 
 function builHeaders() {
