@@ -39,6 +39,8 @@ export const memoize_promise = (fn) => {
     };
 };
 ```
+## Redux
+Redux não foi implementado por ser um escopo MUITO pequeno. Porém fiz a versão em redux mesmo assim. Apenas modificar para branch chamada **Redux**.
 
 ## Quer dar uma olhada no códido? :cop:
 
