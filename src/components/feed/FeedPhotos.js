@@ -27,6 +27,7 @@ class FeedPhotos extends Component {
   }
 
   modalContainer() {
+    let { modalImage } = this.state;
     return (
       <Modal
         isOpen={this.state.modalIsOpen}
@@ -35,18 +36,19 @@ class FeedPhotos extends Component {
         className="Modal"
         overlayClassName="Overlay"
       >
-        <img src={this.state.modalImage} alt="Cachorro" className="animated fadeIn" />
+        <img src={modalImage} alt="Cachorro" className="animated fadeIn" />
       </Modal>
     );
   }
 
   render() {
+    let { photos, category } = this.props;
     return (
       <div className="feed__photos-container">
         {this.modalContainer()}
-        {this.props.photos.map((photo, i) =>
+        {photos.map((photo, i) =>
           <div key={i} className="feed__photos-photo" onClick={() => this.openModal(photo)}>
-            <Link to={`/feed?` + query.stringify({ category: this.props.category, id: i })} >
+            <Link to={`/feed?` + query.stringify({ category, id: i })} >
               <LazyLoad throttle={200} height={300}>
                 <img key={i} src={photo} alt="Cachorro" className="animated fadeIn" />
               </LazyLoad>

@@ -10,7 +10,7 @@ export default class Signup extends Component {
         super();
 
         this.state = {
-            email:"",
+            email: "",
             logged: false,
             loading: false
         };
@@ -44,8 +44,8 @@ export default class Signup extends Component {
         if (event.key === 'Enter') this.login();
     }
 
-    handleForm(ev){
-        this.setState({[ev.target.name]: ev.target.value});
+    handleForm(ev) {
+        this.setState({ [ev.target.name]: ev.target.value });
     }
 
     loginPage() {
@@ -68,6 +68,7 @@ export default class Signup extends Component {
     }
 
     render() {
-        return !this.state.logged ? this.loginPage() : this.redirectToSignup();
+        let { logged } = this.state;
+        return !logged ? this.loginPage() : this.redirectToSignup();
     }
 }

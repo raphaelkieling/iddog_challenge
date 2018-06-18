@@ -34,7 +34,7 @@ export default class Feed extends Component {
   setPhotoContainerParameters() {
     //use to get parameters in url
     const image = query.parse(this.props.location.search);
-    
+
     if (!isEmpty(image))
       this.feedPerCategory(image.category)
         .then(() => {
@@ -86,21 +86,23 @@ export default class Feed extends Component {
   }
 
   feedContainer() {
+    let { categories, categorySelected, listPhotos } = this.state;
     return (
       <div>
-        <FeedNavbar categories={this.state.categories} selected={this.state.categorySelected} getCategory={this.feedPerCategoryLoading} />
-        <FeedPhotos photos={this.state.listPhotos} category={this.state.categorySelected} />}
+        <FeedNavbar categories={categories} selected={categorySelected} getCategory={this.feedPerCategoryLoading} />
+        <FeedPhotos photos={listPhotos} category={categorySelected} />}
       </div>
     );
   }
 
   photoContainer() {
+    let { image, loading } = this.state;
     return (
       <div className="photo__container">
         <Panel className="photo__container-panel animated fadeInRight">
-          {this.state.loading
+          {loading
             ? <Loader />
-            : <img src={this.state.image.href} alt="Cachorro"/>}
+            : <img src={image.href} alt="Cachorro" />}
 
           <br />
 
@@ -113,12 +115,13 @@ export default class Feed extends Component {
   }
 
   render() {
+    let { loading, image } = this.state;
     return (
       <div className="mui-container-fluid">
         <ToastContainer />
-        {this.state.loading
+        {loading
           ? <Loader />
-          : (!this.state.image ? this.feedContainer() : this.photoContainer())
+          : (!image ? this.feedContainer() : this.photoContainer())
         }
       </div>
     );
